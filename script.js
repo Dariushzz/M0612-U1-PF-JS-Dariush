@@ -96,6 +96,11 @@ function crearTarjetas(filosofos) {
             nivel.style.width = porcentaje + "%"; 
             barraHabilidad.append(nivel);
         }
+        let botonBorrar = document.createElement("div");
+        botonBorrar.innerHTML = "&#x2716";
+        botonBorrar.classList.add("botonEliminar");
+        botonBorrar.addEventListener('click',eliminarTarjeta);
+        tarjeta.append(botonBorrar);
 
         // Añadimos tarjeta creada al contenedor de tarjetas
         let contenedor = document.querySelector('.cards-container');
@@ -104,6 +109,7 @@ function crearTarjetas(filosofos) {
 }
 
 function eliminarTarjeta() {
+    this.parentElement.remove();
 }
 
 function ordenarNombreAZ() {
