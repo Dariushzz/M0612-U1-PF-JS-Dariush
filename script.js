@@ -5,6 +5,10 @@ window.onload = () => {
     // Crear handlers para los botones de control
     let botonCrearTarjeta = document.querySelector('.create-btn');
     botonCrearTarjeta.addEventListener('click',crearNuevaTarjeta);
+
+    let botonesOrden = document.querySelectorAll('.sort-btn');
+    botonesOrden[0].addEventListener('click', ordenarNombreAZ);
+    botonesOrden[1].addEventListener('click', ordenarNombreZA);
 }
 
 function crearTarjetas(filosofos) {
@@ -50,20 +54,20 @@ function crearTarjetas(filosofos) {
         
         
         // Añadimos info de la corriente a filaInfo
-        let = infoCorriente = document.createElement("div");
+        let infoCorriente = document.createElement("div");
         infoCorriente.classList.add("info-corriente");
         filaInfo.append(infoCorriente);
         let valorCorriente = document.createElement("span");
         valorCorriente.classList.add("corriente");
-        valorCorriente = `Corriente: ${filosofo.corriente}`;
+        valorCorriente.innerHTML = `Corriente: ${filosofo.corriente}`;
         infoCorriente.append(valorCorriente);
         // Añadimos info del arma a filaInfo
-        let = infoArma = document.createElement("div");
+        let infoArma = document.createElement("div");
         infoArma.classList.add("info-arma");
         filaInfo.append(infoArma);
         let valorArma = document.createElement("span");
         valorArma.classList.add("arma");
-        valorArma = `Arma: ${filosofo.arma}`;
+        valorArma.innerHTML = `Arma: ${filosofo.arma}`;
         infoArma.append(valorArma);
 
         // Añadimos caja de habilidades
@@ -122,13 +126,26 @@ function ordenarNombreAZ() {
 
     // Eliminar totes les targetes de l'array 'tarjeta'
     // Completar codi
-
     // Afegir 'tarjetasOrdenadas' al contenidor de cards
     let contenedor = document.querySelector('.cards-container');
+    contenedor.innerHTML = "";
     // Completar codi
+    tarjetasOrdenadas.forEach(tarjeta => contenedor.append(tarjeta));
+
 }
 
 function ordenarNombreZA() {
+    let tarjetas = Array.from(document.querySelectorAll('.card'));
+
+    let tarjetasOrdenadas = tarjetas.sort((tarjetaA, tarjetaB) => {
+        let nombre1 = tarjetaA.querySelector('h3').innerHTML;
+        let nombre2 = tarjetaB.querySelector('h3').innerHTML;
+        return nombre2.localeCompare(nombre1); 
+    });
+
+    let contenedor = document.querySelector('.cards-container');
+    contenedor.innerHTML = "";
+    tarjetasOrdenadas.forEach(tarjeta => contenedor.append(tarjeta));
 }
 
 function crearNuevaTarjeta(event) {
