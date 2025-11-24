@@ -9,6 +9,12 @@ window.onload = () => {
     let botonesOrden = document.querySelectorAll('.sort-btn');
     botonesOrden[0].addEventListener('click', ordenarNombreAZ);
     botonesOrden[1].addEventListener('click', ordenarNombreZA);
+
+    let botonGuardar = document.querySelector('.save-btn');
+    botonGuardar.addEventListener("click", guardarTarjetas);
+
+    let botonCargar = document.querySelector('.load-btn');
+    botonCargar.addEventListener("click", cargarTarjetas);
 }
 
 function crearTarjetas(filosofos) {
@@ -190,12 +196,26 @@ function parsearTarjetas(tarjetas){
         filosofo.nombre = tarjeta.querySelector('.nombre').innerHTML;
         filosofo.imagen = tarjeta.querySelector('.photo').src;
         filosofo.pais = {};
+        filosofo.pais.nombre = tarjeta.querySelector('.pais').innerHTML;
+        filosofo.pais.bandera = tarjeta.querySelector('.info-pais img').src;
+        filosofo.corriente = tarjeta.querySelector('.corriente').innerHTML;
+        filosofo.arma = tarjeta.querySelector('.arma').innerHTML;
+
         // Completar funció
-        
+        filosofo.habilidades = [];
+
         let habilidades = tarjeta.querySelectorAll('.skill');
         for (let habilidad of habilidades){
             let habilidadParaGuardar = {};
             // Completar funció
+            habilidadParaGuardar.nombre = habilidad.querySelector('.skill-name').innerHTML;
+            let ancho = habilidad.querySelector('.level').style.width;
+            let porcentaje = parseInt(ancho);
+            let nivel = parseInt((porcentaje / 100) * 4);
+            habilidadParaGuardar.nivel = nivel;
+
+            filosofo.habilidades.push(habilidadParaGuardar);
+
         }
         filosofosParseados.push(filosofo);
     }
@@ -209,6 +229,15 @@ function guardarTarjetas(){
 
 
 function cargarTarjetas() {
+    let data = localStorage.getItem("tarjetas");
+    let filosofosGuardados = JSON.parse(data);
+    let contenedor = document.querySelector(".cards-container");
+    contenedor.innerHTML = "";
+
+    if (filosofosGuardados) {
+        crearTarjetas(filosofosGuardados);
+    }
+// No acaba de funcionar 100% bien ya que cuando cargamos las tarjetas guardadas, los nombres de las skills quedan como undefinied.
 }
 
 const filosofos = [
